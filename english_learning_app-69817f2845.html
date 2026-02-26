@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>印刷英语专业说 - 30天学习计划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .week-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .week-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .week-btn:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .week-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .day-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .day-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #f5f5ff;
+            transform: scale(1.1);
+        }
+
+        .day-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .day-btn.completed {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .day-btn.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .day-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .day-date {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .word-card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .word-card.success {
+            border-left-color: #4caf50;
+            background: #f0fff4;
+        }
+
+        .word-card.pending {
+            border-left-color: #ff9800;
+            background: #fff8f0;
+        }
+
+        .word-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .word-en {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .word-cn {
+            font-size: 16px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .word-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin-left: 10px;
+        }
+
+        .status-success {
+            background: #4caf50;
+            color: white;
+        }
+
+        .status-pending {
+            background: #ff9800;
+            color: white;
+        }
+
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .play-btn.playing {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .play-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .examples-section {
+            margin-top: 15px;
+        }
+
+        .example-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ddd;
+        }
+
+        .example-cn {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .example-en {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .example-play-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #667eea;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .example-play-btn.playing {
+            animation: pulse 1s infinite;
+        }
+
+        .example-play-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .recording-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #ddd;
+        }
+
+        .recording-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .record-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .record-btn.start {
+            background: #f44336;
+            color: white;
+        }
+
+        .record-btn.stop {
+            background: #666;
+            color: white;
+        }
+
+        .record-btn.recording {
+            animation: pulse 1s infinite;
+        }
+
+        .record-status {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .record-result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .record-result.success {
+            background: #f0fff4;
+            color: #4caf50;
+            display: block;
+        }
+
+        .record-result.error {
+            background: #fff5f5;
+            color: #f44336;
+            display: block;
+        }
+
+        .checkin-section {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .checkin-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .checkin-progress {
+            font-size: 14px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .checkin-btn {
+            background: white;
+            color: #4caf50;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .checkin-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .checkin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .checkin-btn.completed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .locked-warning {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .locked-warning svg {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            color: #ff9800;
+        }
+
+        .locked-warning p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .content-card {
+                padding: 15px;
+            }
+
+            .word-card {
+                padding: 15px;
+            }
+
+            .day-btn {
+                width: 45px;
+                height: 45px;
+            }
+
+            .recording-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 印刷英语专业说</h1>
+            <p>30天系统学习计划 | 每日10-15分钟 | 跟读打卡解锁</p>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-bar">
+                <span class="progress-label">学习进度</span>
+                <span class="progress-percentage" id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <div class="week-selector" id="weekSelector"></div>
+            <div class="day-selector" id="daySelector"></div>
+        </div>
+
+        <div class="content-card" id="contentCard">
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <p>选择一个星期和日期开始学习</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 学习数据
+        const learningData = {
+            "week1": {
+                title: "第一周: 基础词汇与办公用品",
+                days: [
+                    {
+                        id: 1,
+                        date: "3月2日",
+                        weekday: "周一",
+                        words: [
+                            {
+                                en: "Paper",
+                                cn: "纸",
+                                examples: [
+                                    { cn: "我们的纸不多了，需要订购更多A4纸。", en: "We are running low on paper. We need to order more A4 paper." },
+                                    { cn: "请把这个文件用打印机复印五份副本。", en: "Please make five copies of this document using the printer." }
+                                ]
+                            },
+                            {
+                                en: "Printer",
+                                cn: "打印机",
+                                examples: [
+                                    { cn: "我们的纸不多了，需要订购更多A4纸。", en: "We are running low on paper. We need to order more A4 paper." },
+                                    { cn: "请把这个文件用打印机复印五份副本。", en: "Please make five copies of this document using the printer." }
+                                ]
+                            },
+                            {
+                                en: "Document",
+                                cn: "文件",
+                                examples: [
+                                    { cn: "我们的纸不多了，需要订购更多A4纸。", en: "We are running low on paper. We need to order more A4 paper." },
+                                    { cn: "请把这个文件用打印机复印五份副本。", en: "Please make five copies of this document using the printer." }
+                                ]
+                            },
+                            {
+                                en: "Copy",
+                                cn: "副本/复印",
+                                examples: [
+                                    { cn: "我们的纸不多了，需要订购更多A4纸。", en: "We are running low on paper. We need to order more A4 paper." },
+                                    { cn: "请把这个文件用打印机复印五份副本。", en: "Please make five copies of this document using the printer." }
+                                ]
+                            },
+                            {
+                                en: "File",
+                                cn: "档案/文件",
+                                examples: [
+                                    { cn: "我们的纸不多了，需要订购更多A4纸。", en: "We are running low on paper. We need to order more A4 paper." },
+                                    { cn: "请把这个文件用打印机复印五份副本。", en: "Please make five copies of this document using the printer." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        date: "3月3日",
+                        weekday: "周二",
+                        words: [
+                            {
+                                en: "Textbook",
+                                cn: "教科书",
+                                examples: [
+                                    { cn: "这批教科书的封面需要覆膜。", en: "The cover of this batch of textbooks needs lamination." },
+                                    { cn: "请检查一下这本练习册的第25页有没有错误。", en: "Please check page 25 of this workbook for any errors." }
+                                ]
+                            },
+                            {
+                                en: "Workbook",
+                                cn: "练习册",
+                                examples: [
+                                    { cn: "这批教科书的封面需要覆膜。", en: "The cover of this batch of textbooks needs lamination." },
+                                    { cn: "请检查一下这本练习册的第25页有没有错误。", en: "Please check page 25 of this workbook for any errors." }
+                                ]
+                            },
+                            {
+                                en: "Cover",
+                                cn: "封面",
+                                examples: [
+                                    { cn: "这批教科书的封面需要覆膜。", en: "The cover of this batch of textbooks needs lamination." },
+                                    { cn: "请检查一下这本练习册的第25页有没有错误。", en: "Please check page 25 of this workbook for any errors." }
+                                ]
+                            },
+                            {
+                                en: "Page",
+                                cn: "页面/页",
+                                examples: [
+                                    { cn: "这批教科书的封面需要覆膜。", en: "The cover of this batch of textbooks needs lamination." },
+                                    { cn: "请检查一下这本练习册的第25页有没有错误。", en: "Please check page 25 of this workbook for any errors." }
+                                ]
+                            },
+                            {
+                                en: "Index",
+                                cn: "索引",
+                                examples: [
+                                    { cn: "这批教科书的封面需要覆膜。", en: "The cover of this batch of textbooks needs lamination." },
+                                    { cn: "请检查一下这本练习册的第25页有没有错误。", en: "Please check page 25 of this workbook for any errors." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        date: "3月4日",
+                        weekday: "周三",
+                        words: [
+                            {
+                                en: "Print",
+                                cn: "打印",
+                                examples: [
+                                    { cn: "请打印这份文件，并整理好页面顺序。", en: "Please print this document and collate the pages." },
+                                    { cn: "用扫描仪把这份合同扫描成PDF文件。", en: "Use the scanner to scan this contract into a PDF file." }
+                                ]
+                            },
+                            {
+                                en: "Scan",
+                                cn: "扫描",
+                                examples: [
+                                    { cn: "请打印这份文件，并整理好页面顺序。", en: "Please print this document and collate the pages." },
+                                    { cn: "用扫描仪把这份合同扫描成PDF文件。", en: "Use the scanner to scan this contract into a PDF file." }
+                                ]
+                            },
+                            {
+                                en: "Collate",
+                                cn: "整理/配页",
+                                examples: [
+                                    { cn: "请打印这份文件，并整理好页面顺序。", en: "Please print this document and collate the pages." },
+                                    { cn: "用扫描仪把这份合同扫描成PDF文件。", en: "Use the scanner to scan this contract into a PDF file." }
+                                ]
+                            },
+                            {
+                                en: "Stapler",
+                                cn: "订书机",
+                                examples: [
+                                    { cn: "请打印这份文件，并整理好页面顺序。", en: "Please print this document and collate the pages." },
+                                    { cn: "用扫描仪把这份合同扫描成PDF文件。", en: "Use the scanner to scan this contract into a PDF file." }
+                                ]
+                            },
+                            {
+                                en: "Hole punch",
+                                cn: "打孔机",
+                                examples: [
+                                    { cn: "请打印这份文件，并整理好页面顺序。", en: "Please print this document and collate the pages." },
+                                    { cn: "用扫描仪把这份合同扫描成PDF文件。", en: "Use the scanner to scan this contract into a PDF file." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 4,
+                        date: "3月5日",
+                        weekday: "周四",
+                        words: [
+                            {
+                                en: "Order",
+                                cn: "订单",
+                                examples: [
+                                    { cn: "这个订单的数量是5000本练习册。", en: "The quantity for this order is 5,000 workbooks." },
+                                    { cn: "我们需要给客户发一份正式的报价单。", en: "We need to send a formal quote to the client." }
+                                ]
+                            },
+                            {
+                                en: "Quantity",
+                                cn: "数量",
+                                examples: [
+                                    { cn: "这个订单的数量是5000本练习册。", en: "The quantity for this order is 5,000 workbooks." },
+                                    { cn: "我们需要给客户发一份正式的报价单。", en: "We need to send a formal quote to the client." }
+                                ]
+                            },
+                            {
+                                en: "Client",
+                                cn: "客户",
+                                examples: [
+                                    { cn: "这个订单的数量是5000本练习册。", en: "The quantity for this order is 5,000 workbooks." },
+                                    { cn: "我们需要给客户发一份正式的报价单。", en: "We need to send a formal quote to the client." }
+                                ]
+                            },
+                            {
+                                en: "Quote",
+                                cn: "报价",
+                                examples: [
+                                    { cn: "这个订单的数量是5000本练习册。", en: "The quantity for this order is 5,000 workbooks." },
+                                    { cn: "我们需要给客户发一份正式的报价单。", en: "We need to send a formal quote to the client." }
+                                ]
+                            },
+                            {
+                                en: "Invoice",
+                                cn: "发票",
+                                examples: [
+                                    { cn: "这个订单的数量是5000本练习册。", en: "The quantity for this order is 5,000 workbooks." },
+                                    { cn: "我们需要给客户发一份正式的报价单。", en: "We need to send a formal quote to the client." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 5,
+                        date: "3月6日",
+                        weekday: "周五",
+                        words: [
+                            {
+                                en: "Proof",
+                                cn: "校样/打样",
+                                examples: [
+                                    { cn: "请仔细校对这份校样，确保没有错误。", en: "Please carefully proofread this proof to make sure there are no errors." },
+                                    { cn: "发现任何错误，请在校样上标记清楚以便修正。", en: "If you find any errors, please mark them clearly on the proof for correction." }
+                                ]
+                            },
+                            {
+                                en: "Proofread",
+                                cn: "校对",
+                                examples: [
+                                    { cn: "请仔细校对这份校样，确保没有错误。", en: "Please carefully proofread this proof to make sure there are no errors." },
+                                    { cn: "发现任何错误，请在校样上标记清楚以便修正。", en: "If you find any errors, please mark them clearly on the proof for correction." }
+                                ]
+                            },
+                            {
+                                en: "Error",
+                                cn: "错误",
+                                examples: [
+                                    { cn: "请仔细校对这份校样，确保没有错误。", en: "Please carefully proofread this proof to make sure there are no errors." },
+                                    { cn: "发现任何错误，请在校样上标记清楚以便修正。", en: "If you find any errors, please mark them clearly on the proof for correction." }
+                                ]
+                            },
+                            {
+                                en: "Correction",
+                                cn: "修正",
+                                examples: [
+                                    { cn: "请仔细校对这份校样，确保没有错误。", en: "Please carefully proofread this proof to make sure there are no errors." },
+                                    { cn: "发现任何错误，请在校样上标记清楚以便修正。", en: "If you find any errors, please mark them clearly on the proof for correction." }
+                                ]
+                            },
+                            {
+                                en: "Approval",
+                                cn: "批准",
+                                examples: [
+                                    { cn: "请仔细校对这份校样，确保没有错误。", en: "Please carefully proofread this proof to make sure there are no errors." },
+                                    { cn: "发现任何错误，请在校样上标记清楚以便修正。", en: "If you find any errors, please mark them clearly on the proof for correction." }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "week2": {
+                title: "第二周: 印前流程与材料规格",
+                days: [
+                    {
+                        id: 6,
+                        date: "3月9日",
+                        weekday: "周一",
+                        words: [
+                            {
+                                en: "Prepress",
+                                cn: "印前",
+                                examples: [
+                                    { cn: "印前部门负责文件的排版和设计检查。", en: "The prepress department is responsible for file layout and design checks." },
+                                    { cn: "图片的分辨率至少要300 DPI，印刷出来才清晰。", en: "The image resolution needs to be at least 300 DPI to print clearly." }
+                                ]
+                            },
+                            {
+                                en: "Layout",
+                                cn: "排版/布局",
+                                examples: [
+                                    { cn: "印前部门负责文件的排版和设计检查。", en: "The prepress department is responsible for file layout and design checks." },
+                                    { cn: "图片的分辨率至少要300 DPI，印刷出来才清晰。", en: "The image resolution needs to be at least 300 DPI to print clearly." }
+                                ]
+                            },
+                            {
+                                en: "Design",
+                                cn: "设计",
+                                examples: [
+                                    { cn: "印前部门负责文件的排版和设计检查。", en: "The prepress department is responsible for file layout and design checks." },
+                                    { cn: "图片的分辨率至少要300 DPI，印刷出来才清晰。", en: "The image resolution needs to be at least 300 DPI to print clearly." }
+                                ]
+                            },
+                            {
+                                en: "Resolution",
+                                cn: "分辨率",
+                                examples: [
+                                    { cn: "印前部门负责文件的排版和设计检查。", en: "The prepress department is responsible for file layout and design checks." },
+                                    { cn: "图片的分辨率至少要300 DPI，印刷出来才清晰。", en: "The image resolution needs to be at least 300 DPI to print clearly." }
+                                ]
+                            },
+                            {
+                                en: "Font",
+                                cn: "字体",
+                                examples: [
+                                    { cn: "印前部门负责文件的排版和设计检查。", en: "The prepress department is responsible for file layout and design checks." },
+                                    { cn: "图片的分辨率至少要300 DPI，印刷出来才清晰。", en: "The image resolution needs to be at least 300 DPI to print clearly." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 7,
+                        date: "3月10日",
+                        weekday: "周二",
+                        words: [
+                            {
+                                en: "Plate",
+                                cn: "印版",
+                                examples: [
+                                    { cn: "我们用CTP技术直接制作印刷印版，效率很高。", en: "We use CTP technology to make printing plates directly, which is very efficient." },
+                                    { cn: "制作印版前，要确保图像和文字都正确。", en: "Before making the plate, ensure the images and text are correct." }
+                                ]
+                            },
+                            {
+                                en: "CTP",
+                                cn: "计算机直接制版",
+                                examples: [
+                                    { cn: "我们用CTP技术直接制作印刷印版，效率很高。", en: "We use CTP technology to make printing plates directly, which is very efficient." },
+                                    { cn: "制作印版前，要确保图像和文字都正确。", en: "Before making the plate, ensure the images and text are correct." }
+                                ]
+                            },
+                            {
+                                en: "Image",
+                                cn: "图像",
+                                examples: [
+                                    { cn: "我们用CTP技术直接制作印刷印版，效率很高。", en: "We use CTP technology to make printing plates directly, which is very efficient." },
+                                    { cn: "制作印版前，要确保图像和文字都正确。", en: "Before making the plate, ensure the images and text are correct." }
+                                ]
+                            },
+                            {
+                                en: "Exposure",
+                                cn: "曝光",
+                                examples: [
+                                    { cn: "我们用CTP技术直接制作印刷印版，效率很高。", en: "We use CTP technology to make printing plates directly, which is very efficient." },
+                                    { cn: "制作印版前，要确保图像和文字都正确。", en: "Before making the plate, ensure the images and text are correct." }
+                                ]
+                            },
+                            {
+                                en: "Developer",
+                                cn: "显影液",
+                                examples: [
+                                    { cn: "我们用CTP技术直接制作印刷印版，效率很高。", en: "We use CTP technology to make printing plates directly, which is very efficient." },
+                                    { cn: "制作印版前，要确保图像和文字都正确。", en: "Before making the plate, ensure the images and text are correct." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 8,
+                        date: "3月11日",
+                        weekday: "周三",
+                        words: [
+                            {
+                                en: "Ink",
+                                cn: "油墨",
+                                examples: [
+                                    { cn: "彩色印刷通常使用CMYK四种颜色的油墨。", en: "Color printing usually uses four colors of ink: CMYK." },
+                                    { cn: "青色(C)、品红色(M)、黄色(Y) 和黑色(K)叠加出各种颜色。", en: "Cyan, Magenta, Yellow, and Black (Key) combine to make all other colors." }
+                                ]
+                            },
+                            {
+                                en: "CMYK",
+                                cn: "四色印刷模式",
+                                examples: [
+                                    { cn: "彩色印刷通常使用CMYK四种颜色的油墨。", en: "Color printing usually uses four colors of ink: CMYK." },
+                                    { cn: "青色(C)、品红色(M)、黄色(Y) 和黑色(K)叠加出各种颜色。", en: "Cyan, Magenta, Yellow, and Black (Key) combine to make all other colors." }
+                                ]
+                            },
+                            {
+                                en: "Cyan",
+                                cn: "青色",
+                                examples: [
+                                    { cn: "彩色印刷通常使用CMYK四种颜色的油墨。", en: "Color printing usually uses four colors of ink: CMYK." },
+                                    { cn: "青色(C)、品红色(M)、黄色(Y) 和黑色(K)叠加出各种颜色。", en: "Cyan, Magenta, Yellow, and Black (Key) combine to make all other colors." }
+                                ]
+                            },
+                            {
+                                en: "Magenta",
+                                cn: "品红色",
+                                examples: [
+                                    { cn: "彩色印刷通常使用CMYK四种颜色的油墨。", en: "Color printing usually uses four colors of ink: CMYK." },
+                                    { cn: "青色(C)、品红色(M)、黄色(Y) 和黑色(K)叠加出各种颜色。", en: "Cyan, Magenta, Yellow, and Black (Key) combine to make all other colors." }
+                                ]
+                            },
+                            {
+                                en: "Yellow",
+                                cn: "黄色",
+                                examples: [
+                                    { cn: "彩色印刷通常使用CMYK四种颜色的油墨。", en: "Color printing usually uses four colors of ink: CMYK." },
+                                    { cn: "青色(C)、品红色(M)、黄色(Y) 和黑色(K)叠加出各种颜色。", en: "Cyan, Magenta, Yellow, and Black (Key) combine to make all other colors." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 9,
+                        date: "3月12日",
+                        weekday: "周四",
+                        words: [
+                            {
+                                en: "GSM",
+                                cn: "克重 (克/平方米)",
+                                examples: [
+                                    { cn: "这本画册的封面要用250克的铜版纸。", en: "The cover of this art book should be 250 gsm coated paper." },
+                                    { cn: "内页常用的胶版纸克重通常是80克。", en: "The gsm for the inner pages is usually 80 gsm uncoated paper." }
+                                ]
+                            },
+                            {
+                                en: "Coated paper",
+                                cn: "铜版纸",
+                                examples: [
+                                    { cn: "这本画册的封面要用250克的铜版纸。", en: "The cover of this art book should be 250 gsm coated paper." },
+                                    { cn: "内页常用的胶版纸克重通常是80克。", en: "The gsm for the inner pages is usually 80 gsm uncoated paper." }
+                                ]
+                            },
+                            {
+                                en: "Uncoated paper",
+                                cn: "胶版纸",
+                                examples: [
+                                    { cn: "这本画册的封面要用250克的铜版纸。", en: "The cover of this art book should be 250 gsm coated paper." },
+                                    { cn: "内页常用的胶版纸克重通常是80克。", en: "The gsm for the inner pages is usually 80 gsm uncoated paper." }
+                                ]
+                            },
+                            {
+                                en: "Weight",
+                                cn: "重量",
+                                examples: [
+                                    { cn: "这本画册的封面要用250克的铜版纸。", en: "The cover of this art book should be 250 gsm coated paper." },
+                                    { cn: "内页常用的胶版纸克重通常是80克。", en: "The gsm for the inner pages is usually 80 gsm uncoated paper." }
+                                ]
+                            },
+                            {
+                                en: "Thickness",
+                                cn: "厚度",
+                                examples: [
+                                    { cn: "这本画册的封面要用250克的铜版纸。", en: "The cover of this art book should be 250 gsm coated paper." },
+                                    { cn: "内页常用的胶版纸克重通常是80克。", en: "The gsm for the inner pages is usually 80 gsm uncoated paper." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 10,
+                        date: "3月13日",
+                        weekday: "周五",
+                        words: [
+                            {
+                                en: "Bleed",
+                                cn: "出血",
+                                examples: [
+                                    { cn: "背景图片或颜色需要设置3毫米的出血，以防裁切后留白边。", en: "Background images or colors need a 3mm bleed to prevent white edges after trimming." },
+                                    { cn: "请检查一下页边距，确保文字不会太靠近边缘。", en: "Please check the margins to ensure the text isn't too close to the edge." }
+                                ]
+                            },
+                            {
+                                en: "Margin",
+                                cn: "页边距",
+                                examples: [
+                                    { cn: "背景图片或颜色需要设置3毫米的出血，以防裁切后留白边。", en: "Background images or colors need a 3mm bleed to prevent white edges after trimming." },
+                                    { cn: "请检查一下页边距，确保文字不会太靠近边缘。", en: "Please check the margins to ensure the text isn't too close to the edge." }
+                                ]
+                            },
+                            {
+                                en: "Trim size",
+                                cn: "成品尺寸",
+                                examples: [
+                                    { cn: "背景图片或颜色需要设置3毫米的出血，以防裁切后留白边。", en: "Background images or colors need a 3mm bleed to prevent white edges after trimming." },
+                                    { cn: "请检查一下页边距，确保文字不会太靠近边缘。", en: "Please check the margins to ensure the text isn't too close to the edge." }
+                                ]
+                            },
+                            {
+                                en: "Spine",
+                                cn: "书脊",
+                                examples: [
+                                    { cn: "背景图片或颜色需要设置3毫米的出血，以防裁切后留白边。", en: "Background images or colors need a 3mm bleed to prevent white edges after trimming." },
+                                    { cn: "请检查一下页边距，确保文字不会太靠近边缘。", en: "Please check the margins to ensure the text isn't too close to the edge." }
+                                ]
+                            },
+                            {
+                                en: "Grain",
+                                cn: "纸张纹理/方向",
+                                examples: [
+                                    { cn: "背景图片或颜色需要设置3毫米的出血，以防裁切后留白边。", en: "Background images or colors need a 3mm bleed to prevent white edges after trimming." },
+                                    { cn: "请检查一下页边距，确保文字不会太靠近边缘。", en: "Please check the margins to ensure the text isn't too close to the edge." }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "week3": {
+                title: "第三周: 印刷过程与后期加工",
+                days: [
+                    {
+                        id: 11,
+                        date: "3月16日",
+                        weekday: "周一",
+                        words: [
+                            {
+                                en: "Misprint",
+                                cn: "印刷错误",
+                                examples: [
+                                    { cn: "发现有印刷错误要立即停机，减少废品。", en: "If you find a misprint, stop the press immediately to reduce waste." },
+                                    { cn: "检查套准情况，确保四色图案没有偏移。", en: "Check the registration to make sure the four colors aren't misaligned (offset)." }
+                                ]
+                            },
+                            {
+                                en: "Waste",
+                                cn: "废品/浪费",
+                                examples: [
+                                    { cn: "发现有印刷错误要立即停机，减少废品。", en: "If you find a misprint, stop the press immediately to reduce waste." },
+                                    { cn: "检查套准情况，确保四色图案没有偏移。", en: "Check the registration to make sure the four colors aren't misaligned (offset)." }
+                                ]
+                            },
+                            {
+                                en: "Registration",
+                                cn: "套准",
+                                examples: [
+                                    { cn: "发现有印刷错误要立即停机，减少废品。", en: "If you find a misprint, stop the press immediately to reduce waste." },
+                                    { cn: "检查套准情况，确保四色图案没有偏移。", en: "Check the registration to make sure the four colors aren't misaligned (offset)." }
+                                ]
+                            },
+                            {
+                                en: "Color bar",
+                                cn: "测色条",
+                                examples: [
+                                    { cn: "发现有印刷错误要立即停机，减少废品。", en: "If you find a misprint, stop the press immediately to reduce waste." },
+                                    { cn: "检查套准情况，确保四色图案没有偏移。", en: "Check the registration to make sure the four colors aren't misaligned (offset)." }
+                                ]
+                            },
+                            {
+                                en: "Offset",
+                                cn: "偏移",
+                                examples: [
+                                    { cn: "发现有印刷错误要立即停机，减少废品。", en: "If you find a misprint, stop the press immediately to reduce waste." },
+                                    { cn: "检查套准情况，确保四色图案没有偏移。", en: "Check the registration to make sure the four colors aren't misaligned (offset)." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 12,
+                        date: "3月17日",
+                        weekday: "周二",
+                        words: [
+                            {
+                                en: "Drying",
+                                cn: "干燥",
+                                examples: [
+                                    { cn: "印刷后需要足够的干燥时间，防止蹭脏。", en: "Printed sheets need enough drying time to prevent smudging." },
+                                    { cn: "如果干燥太慢，可以适当增加喷粉用量。", en: "If drying is too slow, you can increase the amount of spray powder." }
+                                ]
+                            },
+                            {
+                                en: "Smudging",
+                                cn: "蹭脏/模糊",
+                                examples: [
+                                    { cn: "印刷后需要足够的干燥时间，防止蹭脏。", en: "Printed sheets need enough drying time to prevent smudging." },
+                                    { cn: "如果干燥太慢，可以适当增加喷粉用量。", en: "If drying is too slow, you can increase the amount of spray powder." }
+                                ]
+                            },
+                            {
+                                en: "Spray powder",
+                                cn: "喷粉",
+                                examples: [
+                                    { cn: "印刷后需要足够的干燥时间，防止蹭脏。", en: "Printed sheets need enough drying time to prevent smudging." },
+                                    { cn: "如果干燥太慢，可以适当增加喷粉用量。", en: "If drying is too slow, you can increase the amount of spray powder." }
+                                ]
+                            },
+                            {
+                                en: "Stack",
+                                cn: "堆叠",
+                                examples: [
+                                    { cn: "印刷后需要足够的干燥时间，防止蹭脏。", en: "Printed sheets need enough drying time to prevent smudging." },
+                                    { cn: "如果干燥太慢，可以适当增加喷粉用量。", en: "If drying is too slow, you can increase the amount of spray powder." }
+                                ]
+                            },
+                            {
+                                en: "Anti-set off spray",
+                                cn: "防蹭脏喷粉",
+                                examples: [
+                                    { cn: "印刷后需要足够的干燥时间，防止蹭脏。", en: "Printed sheets need enough drying time to prevent smudging." },
+                                    { cn: "如果干燥太慢，可以适当增加喷粉用量。", en: "If drying is too slow, you can increase the amount of spray powder." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 13,
+                        date: "3月18日",
+                        weekday: "周三",
+                        words: [
+                            {
+                                en: "Binding",
+                                cn: "装订",
+                                examples: [
+                                    { cn: "这本杂志很薄，适合用骑马订。", en: "This magazine is thin, so saddle stitching is suitable." },
+                                    { cn: "这本词典很厚，需要采用胶装或者精装。", en: "This dictionary is thick, so it needs perfect binding or to be a hardcover." }
+                                ]
+                            },
+                            {
+                                en: "Perfect binding",
+                                cn: "胶装 (无线胶订)",
+                                examples: [
+                                    { cn: "这本杂志很薄，适合用骑马订。", en: "This magazine is thin, so saddle stitching is suitable." },
+                                    { cn: "这本词典很厚，需要采用胶装或者精装。", en: "This dictionary is thick, so it needs perfect binding or to be a hardcover." }
+                                ]
+                            },
+                            {
+                                en: "Saddle stitching",
+                                cn: "骑马订",
+                                examples: [
+                                    { cn: "这本杂志很薄，适合用骑马订。", en: "This magazine is thin, so saddle stitching is suitable." },
+                                    { cn: "这本词典很厚，需要采用胶装或者精装。", en: "This dictionary is thick, so it needs perfect binding or to be a hardcover." }
+                                ]
+                            },
+                            {
+                                en: "Hardcover",
+                                cn: "精装",
+                                examples: [
+                                    { cn: "这本杂志很薄，适合用骑马订。", en: "This magazine is thin, so saddle stitching is suitable." },
+                                    { cn: "这本词典很厚，需要采用胶装或者精装。", en: "This dictionary is thick, so it needs perfect binding or to be a hardcover." }
+                                ]
+                            },
+                            {
+                                en: "Paperback",
+                                cn: "平装",
+                                examples: [
+                                    { cn: "这本杂志很薄，适合用骑马订。", en: "This magazine is thin, so saddle stitching is suitable." },
+                                    { cn: "这本词典很厚，需要采用胶装或者精装。", en: "This dictionary is thick, so it needs perfect binding or to be a hardcover." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 14,
+                        date: "3月19日",
+                        weekday: "周四",
+                        words: [
+                            {
+                                en: "Cutting",
+                                cn: "裁切",
+                                examples: [
+                                    { cn: "印刷完成后，下一步是裁切到成品尺寸。", en: "After printing, the next step is cutting to the final trim size." },
+                                    { cn: "宣传页需要先压痕，才能方便地折叠而不损坏纸张。", en: "Flyers need to be scored first so they can be folded easily without damaging the paper." }
+                                ]
+                            },
+                            {
+                                en: "Folding",
+                                cn: "折页",
+                                examples: [
+                                    { cn: "印刷完成后，下一步是裁切到成品尺寸。", en: "After printing, the next step is cutting to the final trim size." },
+                                    { cn: "宣传页需要先压痕，才能方便地折叠而不损坏纸张。", en: "Flyers need to be scored first so they can be folded easily without damaging the paper." }
+                                ]
+                            },
+                            {
+                                en: "Scoring",
+                                cn: "压痕",
+                                examples: [
+                                    { cn: "印刷完成后，下一步是裁切到成品尺寸。", en: "After printing, the next step is cutting to the final trim size." },
+                                    { cn: "宣传页需要先压痕，才能方便地折叠而不损坏纸张。", en: "Flyers need to be scored first so they can be folded easily without damaging the paper." }
+                                ]
+                            },
+                            {
+                                en: "Perforating",
+                                cn: "打孔/打齿孔",
+                                examples: [
+                                    { cn: "印刷完成后，下一步是裁切到成品尺寸。", en: "After printing, the next step is cutting to the final trim size." },
+                                    { cn: "宣传页需要先压痕，才能方便地折叠而不损坏纸张。", en: "Flyers need to be scored first so they can be folded easily without damaging the paper." }
+                                ]
+                            },
+                            {
+                                en: "Guillotine",
+                                cn: "闸刀式切纸机",
+                                examples: [
+                                    { cn: "印刷完成后，下一步是裁切到成品尺寸。", en: "After printing, the next step is cutting to the final trim size." },
+                                    { cn: "宣传页需要先压痕，才能方便地折叠而不损坏纸张。", en: "Flyers need to be scored first so they can be folded easily without damaging the paper." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 15,
+                        date: "3月20日",
+                        weekday: "周五",
+                        words: [
+                            {
+                                en: "Lamination",
+                                cn: "覆膜",
+                                examples: [
+                                    { cn: "封面覆膜可以增加耐用性和质感。", en: "Cover lamination can increase durability and texture." },
+                                    { cn: "光膜让颜色更鲜艳，哑膜则显得更雅致。", en: "Gloss lamination makes colors more vibrant, while matte lamination looks more elegant." }
+                                ]
+                            },
+                            {
+                                en: "Gloss lamination",
+                                cn: "光膜",
+                                examples: [
+                                    { cn: "封面覆膜可以增加耐用性和质感。", en: "Cover lamination can increase durability and texture." },
+                                    { cn: "光膜让颜色更鲜艳，哑膜则显得更雅致。", en: "Gloss lamination makes colors more vibrant, while matte lamination looks more elegant." }
+                                ]
+                            },
+                            {
+                                en: "Matte lamination",
+                                cn: "哑膜",
+                                examples: [
+                                    { cn: "封面覆膜可以增加耐用性和质感。", en: "Cover lamination can increase durability and texture." },
+                                    { cn: "光膜让颜色更鲜艳，哑膜则显得更雅致。", en: "Gloss lamination makes colors more vibrant, while matte lamination looks more elegant." }
+                                ]
+                            },
+                            {
+                                en: "Varnish",
+                                cn: "上光油",
+                                examples: [
+                                    { cn: "封面覆膜可以增加耐用性和质感。", en: "Cover lamination can durability and texture." },
+                                    { cn: "光膜让颜色更鲜艳，哑膜则显得更雅致。", en: "Gloss lamination makes colors more vibrant, while matte lamination looks more elegant." }
+                                ]
+                            },
+                            {
+                                en: "Spot UV",
+                                cn: "局部UV",
+                                examples: [
+                                    { cn: "封面覆膜可以增加耐用性和质感。", en: "Cover lamination can increase durability and texture." },
+                                    { cn: "光膜让颜色更鲜艳，哑膜则显得更雅致。", en: "Gloss lamination makes colors more vibrant, while matte lamination looks more elegant." }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "week4": {
+                title: "第四周: 质量控制与客户沟通",
+                days: [
+                    {
+                        id: 16,
+                        date: "3月23日",
+                        weekday: "周一",
+                        words: [
+                            {
+                                en: "Quality control (QC)",
+                                cn: "质量控制",
+                                examples: [
+                                    { cn: "质量控制部门负责对成品进行最终检查。", en: "The quality control department is responsible for the final inspection of finished products." },
+                                    { cn: "在大货生产前，我们会先做一个样品给客户确认。", en: "Before mass production, we will make a sample for the customer to confirm." }
+                                ]
+                            },
+                            {
+                                en: "Inspection",
+                                cn: "检查",
+                                examples: [
+                                    { cn: "质量控制部门负责对成品进行最终检查。", en: "The quality control department is responsible for the final inspection of finished products." },
+                                    { cn: "在大货生产前，我们会先做一个样品给客户确认。", en: "Before mass production, we will make a sample for the customer to confirm." }
+                                ]
+                            },
+                            {
+                                en: "Sample",
+                                cn: "样品",
+                                examples: [
+                                    { cn: "质量控制部门负责对成品进行最终检查。", en: "The quality control department is responsible for the final inspection of finished products." },
+                                    { cn: "在大货生产前，我们会先做一个样品给客户确认。", en: "Before mass production, we will make a sample for the customer to confirm." }
+                                ]
+                            },
+                            {
+                                en: "Defect",
+                                cn: "缺陷",
+                                examples: [
+                                    { cn: "质量控制部门负责对成品进行最终检查。", en: "The quality control department is responsible for the final inspection of finished products." },
+                                    { cn: "在大货生产前，我们会先做一个样品给客户确认。", en: "Before mass production, we will make a sample for the customer to confirm." }
+                                ]
+                            },
+                            {
+                                en: "Standard",
+                                cn: "标准",
+                                examples: [
+                                    { cn: "质量控制部门负责对成品进行最终检查。", en: "The quality control department is responsible for the final inspection of finished products." },
+                                    { cn: "在大货生产前，我们会先做一个样品给客户确认。", en: "Before mass production, we will make a sample for the sample for the customer to confirm." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 17,
+                        date: "3月24日",
+                        weekday: "周二",
+                        words: [
+                            {
+                                en: "Die-cut",
+                                cn: "模切",
+                                examples: [
+                                    { cn: "这个封面的特殊形状需要用模切工艺来完成。", en: "The special shape of this cover needs to be created using a die-cut process." },
+                                    { cn: "公司logo可以做烫金处理，看起来更有档次。", en: "The company logo can be done with foil stamping to make it look more premium." }
+                                ]
+                            },
+                            {
+                                en: "Embossing",
+                                cn: "压凹凸/压印",
+                                examples: [
+                                    { cn: "这个封面的特殊形状需要用模切工艺来完成。", en: "The special shape of this cover needs to be created using a die-cut process." },
+                                    { cn: "公司logo可以做烫金处理，看起来更有档次。", en: "The company logo can be done with foil stamping to make it look more premium." }
+                                ]
+                            },
+                            {
+                                en: "Foil stamping",
+                                cn: "烫金",
+                                examples: [
+                                    { cn: "这个封面的特殊形状需要用模切工艺来完成。", en: "The special shape of this cover needs to be created using a die-cut process." },
+                                    { cn: "公司logo可以做烫金处理，看起来更有档次。", en: "The company logo can be done with foil stamping to make it look more premium." }
+                                ]
+                            },
+                            {
+                                en: "Index tab",
+                                cn: "索引标签",
+                                examples: [
+                                    { cn: "这个封面的特殊形状需要用模切工艺来完成。", en: "The special shape of this cover needs to be created using a die-cut process." },
+                                    { cn: "公司logo可以做烫金处理，看起来更有档次。", en: "The company logo can be done with foil stamping to make it look more premium." }
+                                ]
+                            },
+                            {
+                                en: "Pocket folder",
+                                cn: "文件夹",
+                                examples: [
+                                    { cn: "这个封面的特殊形状需要用模切工艺来完成。", en: "The special shape of this cover needs to be created using a die-cut process." },
+                                    { cn: "公司logo可以做烫金处理，看起来更有档次。", en: "The company logo can be done with foil stamping to make it look more premium." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 18,
+                        date: "3月25日",
+                        weekday: "周三",
+                        words: [
+                            {
+                                en: "Packing",
+                                cn: "包装",
+                                examples: [
+                                    { cn: "每50本书用收缩膜塑封为一包，然后放在托盘上。", en: "Shrink wrap every 50 books into one bundle, then place them on a pallet." },
+                                    { cn: "每个纸箱外面都要贴上标签，注明书名和数量。", en: "Each carton must have a label on the outside indicating the book title and quantity." }
+                                ]
+                            },
+                            {
+                                en: "Pallet",
+                                cn: "托盘",
+                                examples: [
+                                    { cn: "每50本书用收缩膜塑封为一包，然后放在托盘上。", en: "Shrink wrap every 50 books into one bundle, then place them on a pallet." },
+                                    { cn: "每个纸箱外面都要贴上标签，注明书名和数量。", en: "Each carton must have a label on the outside indicating the book title and quantity." }
+                                ]
+                            },
+                            {
+                                en: "Shrink wrap",
+                                cn: "收缩膜/塑封",
+                                examples: [
+                                    { cn: "每50本书用收缩膜塑封为一包，然后放在托盘上。", en: "Shrink wrap every 50 books into one bundle, then place them on a pallet." },
+                                    { cn: "每个纸箱外面都要贴上标签，注明书名和数量。", en: "Each carton must have a label on the outside indicating the book title and quantity." }
+                                ]
+                            },
+                            {
+                                en: "Label",
+                                cn: "标签",
+                                examples: [
+                                    { cn: "每50本书用收缩膜塑封为一包，然后放在托盘上。", en: "Shrink wrap every 50 books into one bundle, then place them on a pallet." },
+                                    { cn: "每个纸箱外面都要贴上标签，注明书名和数量。", en: "Each carton must have a label on the outside indicating the book title and quantity." }
+                                ]
+                            },
+                            {
+                                en: "Carton",
+                                cn: "纸箱",
+                                examples: [
+                                    { cn: "每50本书用收缩膜塑封为一包，然后放在托盘上。", en: "Shrink wrap every 50 books into one bundle, then place them on a pallet." },
+                                    { cn: "每个纸箱外面都要贴上标签，注明书名和数量。", en: "Each carton must have a label on the outside indicating the book title and quantity." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 19,
+                        date: "3月26日",
+                        weekday: "周四",
+                        words: [
+                            {
+                                en: "Delivery",
+                                cn: "交货/送货",
+                                examples: [
+                                    { cn: "这批货预计下周五交货。", en: "This batch of goods is scheduled for delivery next Friday." },
+                                    { cn: "请确认仓库里还有多少库存。", en: "Please check how much inventory we have left in the warehouse." }
+                                ]
+                            },
+                            {
+                                en: "Shipping",
+                                cn: "运输/发货",
+                                examples: [
+                                    { cn: "这批货预计下周五交货。", en: "This batch of goods is scheduled for delivery next Friday." },
+                                    { cn: "请确认仓库里还有多少库存。", en: "Please check how much inventory we have left in the warehouse." }
+                                ]
+                            },
+                            {
+                                en: "Warehouse",
+                                cn: "仓库",
+                                examples: [
+                                    { cn: "这批货预计下周五交货。", en: "This batch of goods is scheduled for delivery next Friday." },
+                                    { cn: "请确认仓库里还有多少库存。", en: "Please check how much inventory we have left in the warehouse." }
+                                ]
+                            },
+                            {
+                                en: "Inventory",
+                                cn: "库存",
+                                examples: [
+                                    { cn: "这批货预计下周五交货。", en: "This batch of goods is scheduled for delivery next Friday." },
+                                    { cn: "请确认仓库里还有多少库存。", en: "Please check how much inventory we have left in the warehouse." }
+                                ]
+                            },
+                            {
+                                en: "Dispatch",
+                                cn: "发货",
+                                examples: [
+                                    { cn: "这批货预计下周五交货。", en: "This batch of goods is scheduled for delivery next Friday." },
+                                    { cn: "请确认仓库里还有多少库存。", en: "Please check how much inventory we have left in the warehouse." }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        id: 20,
+                        date: "3月27日",
+                        weekday: "周五",
+                        words: [
+                            {
+                                en: "Reprint",
+                                cn: "重印",
+                                examples: [
+                                    { cn: "这本书卖得很好，我们需要重印了。", en: "This book is selling well; we need to do a reprint." },
+                                    { cn: "在重印时，我们对内容进行了一些小的更新。", en: "For the reprint, we made some small updates to the content." }
+                                ]
+                            },
+                            {
+                                en: "Update",
+                                cn: "更新",
+                                examples: [
+                                    { cn: "这本书卖得很好，我们需要重印了。", en: "This book is selling well; we need to do a reprint." },
+                                    { cn: "在重印时，我们对内容进行了一些小的更新。", en: "For the reprint, we made some small updates to the content." }
+                                ]
+                            },
+                            {
+                                en: "Edition",
+                                cn: "版本",
+                                examples: [
+                                    { cn: "这本书卖得很好，我们需要重印了。", en: "This book is selling well; we need to do a reprint." },
+                                    { cn: "在重印时，我们对内容进行了一些小的更新。", en: "For the reprint, we made some small updates to the content." }
+                                ]
+                            },
+                            {
+                                en: "Copyright",
+                                cn: "版权",
+                                examples: [
+                                    { cn: "这本书卖得很好，我们需要重印了。", en: "This book is selling well; we need to do a reprint." },
+                                    { cn: "在重印时，我们对内容进行了一些小的新。", en: "For the reprint, we made some small updates to the content." }
+                                ]
+                            },
+                            {
+                                en: "ISBN",
+                                cn: "国际标准书号",
+                                examples: [
+                                    { cn: "这本书卖得很好，我们需要重印了。", en: "This book is selling well; we need to do a reprint." },
+                                    { cn: "在重印时，我们对内容进行了一些小的更新。", en: "For the reprint, we made some small updates to the content." }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // 状态管理
+        let currentWeek = 'week1';
+        let currentDayId = null;
+        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        let currentSpeech = null;
+        let recognition = null;
+        let isRecording = false;
+        let recordingStates = {}; // 存储每个单词的跟读状态
+        let audioInitialized = false; // 移动端音频初始化标记
+
+        // 检查浏览器是否支持语音识别
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript.toLowerCase();
+                const currentWord = event.target.dataset.word;
+                checkPronunciation(transcript, currentWord);
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                stopRecording(event.target, false);
+            };
+
+            recognition.onend = () => {
+                isRecording = false;
+            };
+        }
+
+        // 初始化移动端音频（需要用户交互）
+        function initAudio() {
+            if (!audioInitialized) {
+                // 触发一次空播放来激活音频上下文
+                const testUtterance = new SpeechSynthesisUtterance('');
+                testUtterance.volume = 0;
+                window.speechSynthesis.speak(testUtterance);
+                audioInitialized = true;
+            }
+        }
+
+        // 初始化
+        function init() {
+            // 添加全局点击监听来初始化音频
+            document.addEventListener('click', initAudio, { once: true });
+            document.addEventListener('touchstart', initAudio, { once: true });
+
+            renderWeekSelector();
+            updateProgress();
+            loadRecordingStates();
+
+            // 检测移动端并给出提示
+            if (isMobile()) {
+                console.log('检测到移动端，已优化音频兼容性');
+            }
+        }
+
+        // 检测是否为移动设备
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 渲染周选择器
+        function renderWeekSelector() {
+            const weekSelector = document.getElementById('weekSelector');
+            weekSelector.innerHTML = '';
+
+            Object.keys(learningData).forEach((weekKey, index) => {
+                const week = learningData[weekKey];
+                const btn = document.createElement('button');
+                btn.className = `week-btn ${currentWeek === weekKey ? 'active' : ''}`;
+                btn.textContent = `第${index + 1}周`;
+                btn.onclick = () => selectWeek(weekKey);
+                weekSelector.appendChild(btn);
+            });
+
+            renderDaySelector();
+        }
+
+        // 选择周
+        function selectWeek(weekKey) {
+            currentWeek = weekKey;
+            currentDayId = null;
+            renderWeekSelector();
+            renderDaySelector();
+            renderContent();
+        }
+
+        // 渲染日期选择器
+        function renderDaySelector() {
+            const daySelector = document.getElementById('daySelector');
+            daySelector.innerHTML = '';
+
+            const weekData = learningData[currentWeek];
+            weekData.days.forEach(day => {
+                const btn = document.createElement('button');
+                const isCompleted = completedDays.includes(day.id);
+                const isActive = currentDayId === day.id;
+                const isLocked = day.id > 1 && !completedDays.includes(day.id - 1);
+
+                btn.className = `day-btn ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}`;
+                btn.textContent = day.id;
+
+                if (!isLocked) {
+                    btn.onclick = () => selectDay(day.id);
+                }
+
+                daySelector.appendChild(btn);
+            });
+        }
+
+        // 选择日期
+        function selectDay(dayId) {
+            currentDayId = dayId;
+            renderDaySelector();
+            renderContent();
+        }
+
+        // 渲染内容
+        function renderContent() {
+            const contentCard = document.getElementById('contentCard');
+
+            if (!currentDayId) {
+                contentCard.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <p>选择一个星期和日期开始学习</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const weekData = learningData[currentWeek];
+            const dayData = weekData.days.find(d => d.id === currentDayId);
+
+            // 检查是否锁定
+            if (dayData.id > 1 && !completedDays.includes(dayData.id - 1)) {
+                contentCard.innerHTML = `
+                    <div class="locked-warning">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <h3>🔒 完成前一天的学习任务后解锁</h3>
+                        <p>请先完成 Day ${dayData.id - 1} 的跟读打卡</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const isCompleted = completedDays.includes(dayData.id);
+
+            let wordsHTML = dayData.words.map((word, wordIndex) => {
+                const wordState = recordingStates[`${dayData.id}_${wordIndex}`] || {};
+                const statusClass = wordState.success ? 'success' : (wordState.attempted ? 'pending' : '');
+
+                return `
+                <div class="word-card ${statusClass}" id="word-${dayData.id}-${wordIndex}">
+                    <div class="word-header">
+                        <div>
+                            <div class="word-en">
+                                ${word.en}
+                                ${wordState.success ? '<span class="word-status status-success">✓</span>' : ''}
+                                ${wordState.attempted && !wordState.success ? '<span class="word-status status-pending">重试</span>' : ''}
+                            </div>
+                            <div class="word-cn">${word.cn}</div>
+                        </div>
+                        <button class="play-btn" onclick="playWord('${word.en}')">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="examples-section">
+                        ${word.examples.map((example, exIndex) => `
+                            <div class="example-item">
+                                <div class="example-cn">${example.cn}</div>
+                                <div class="example-en">
+                                    <span>${example.en}</span>
+                                    <button class="example-play-btn" onclick="playExample('${example.en}', this)">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="recording-section">
+                        <div class="recording-controls">
+                            <button class="record-btn start" onclick="startRecording(this, '${word.en}', ${dayData.id}, ${wordIndex})" data-recording="false">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                    <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                                </svg>
+                                点击跟读
+                            </button>
+                            <span class="record-status">点击按钮开始跟读</span>
+                        </div>
+                        <div class="record-result" id="result-${dayData.id}-${wordIndex}"></div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            // 打卡部分
+            const checkinSection = `
+                <div class="checkin-section">
+                    <div class="checkin-title">📋 今日打卡</div>
+                    <div class="checkin-progress">
+                        已完成 ${getDayCompletedCount(dayData.id)} / 5 个单词跟读
+                    </div>
+                    ${isCompleted
+                        ? '<button class="checkin-btn completed">✓ 今日打卡成功</button>'
+                        : `<button class="checkin-btn" ${getDayCompletedCount(dayData.id) < 5 ? 'disabled' : ''} onclick="completeDay(${dayData.id})">
+                             ${getDayCompletedCount(dayData.id) < 5 ? '完成所有单词跟读后打卡' : '🎉 点击打卡'}
+                           </button>`
+                    }
+                </div>
+            `;
+
+            contentCard.innerHTML = `
+                <div class="day-header">
+                    <div class="day-title">Day ${dayData.id}</div>
+                    <div class="day-date">${dayData.date} ${dayData.weekday}</div>
+                </div>
+                ${wordsHTML}
+                ${checkinSection}
+            `;
+        }
+
+        // 开始录音
+        function startRecording(btn, word, dayId, wordIndex) {
+            if (!recognition) {
+                alert('您的浏览器不支持语音识别功能，请使用Chrome或Edge浏览器。');
+                return;
+            }
+
+            if (isRecording) {
+                alert('请等待当前录音完成');
+                return;
+            }
+
+            isRecording = true;
+            btn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                    <circle cx="12" cy="12" r="6"/>
+                </svg>
+                正在录音...
+            `;
+            btn.classList.add('recording');
+            btn.classList.remove('start');
+            btn.classList.add('stop');
+
+            const statusSpan = btn.nextElementSibling;
+            statusSpan.textContent = '请跟读...';
+
+            recognition.dataset.word = word;
+            recognition.dataset.dayId = dayId;
+            recognition.dataset.wordIndex = wordIndex;
+
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error('Recognition start error:', error);
+                stopRecording(btn, false);
+            }
+
+            // 设置超时，5秒后自动停止
+            setTimeout(() => {
+                if (isRecording) {
+                    recognition.stop();
+                }
+            }, 5000);
+        }
+
+        // 停止录音
+        function stopRecording(btn, success) {
+            isRecording = false;
+            btn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                    <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+                ${success ? '重新跟读' : '点击跟读'}
+            `;
+            btn.classList.remove('recording');
+            btn.classList.remove('stop');
+            btn.classList.add('start');
+        }
+
+        // 检查发音
+        function checkPronunciation(transcript, targetWord) {
+            const dayId = recognition.dataset.dayId;
+            const wordIndex = recognition.dataset.wordIndex;
+            const wordCard = document.getElementById(`word-${dayId}-${wordIndex}`);
+            const recordBtn = wordCard.querySelector('.record-btn');
+            const resultDiv = document.getElementById(`result-${dayId}-${wordIndex}`);
+
+            // 清理目标单词，移除括号内容
+            const cleanTarget = targetWord.replace(/\s*\([^)]*\)\s*/g, '').toLowerCase().trim();
+            const cleanTranscript = transcript.toLowerCase().trim();
+
+            // 模糊匹配：检查是否包含目标单词
+            const isMatch = cleanTranscript.includes(cleanTarget) ||
+                          cleanTarget.includes(cleanTranscript) ||
+                          calculateSimilarity(cleanTranscript, cleanTarget) > 0.7;
+
+            const stateKey = `${dayId}_${wordIndex}`;
+            recordingStates[stateKey] = {
+                attempted: true,
+                success: isMatch,
+                transcript: cleanTranscript,
+                timestamp: Date.now()
+            };
+
+            // 保存到localStorage
+            localStorage.setItem('recordingStates', JSON.stringify(recordingStates));
+
+            if (isMatch) {
+                resultDiv.className = 'record-result success';
+                resultDiv.textContent = `✓ 跟读正确！识别到: "${transcript}"`;
+                stopRecording(recordBtn, true);
+                renderContent(); // 重新渲染以更新状态
+            } else {
+                resultDiv.className = 'record-result error';
+                resultDiv.textContent = `✕ 跟读未通过，请再试一次。识别到: "${transcript}"`;
+                stopRecording(recordBtn, false);
+            }
+        }
+
+        // 计算字符串相似度（编辑距离）
+        function calculateSimilarity(str1, str2) {
+            const longer = str1.length > str2.length ? str1 : str2;
+            const shorter = str1.length > str2.length ? str2 : str1;
+
+            if (longer.length === 0) return 1.0;
+
+            const costs = [];
+            for (let i = 0; i <= longer.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= shorter.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (longer.charAt(i - 1) !== shorter.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) costs[shorter.length] = lastValue;
+            }
+
+            return (longer.length - costs[shorter.length]) / longer.length;
+        }
+
+        // 获取当日已完成的单词数
+        function getDayCompletedCount(dayId) {
+            let count = 0;
+            for (let i = 0; i < 5; i++) {
+                const stateKey = `${dayId}_${i}`;
+                if (recordingStates[stateKey] && recordingStates[stateKey].success) {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        // 完成当日打卡
+        function completeDay(dayId) {
+            if (getDayCompletedCount(dayId) < 5) {
+                alert('请先完成所有5个单词的跟读！');
+                return;
+            }
+
+            completedDays.push(dayId);
+            localStorage.setItem('completedDays', JSON.stringify(completedDays));
+            updateProgress();
+            renderDaySelector();
+            renderContent();
+
+            // 显示成功提示
+            alert(`🎉 恭喜！Day ${dayId} 打卡成功！明天可以学习 Day ${dayId + 1} 了！`);
+        }
+
+        // 加载跟读状态
+        function loadRecordingStates() {
+            const saved = localStorage.getItem('recordingStates');
+            if (saved) {
+                recordingStates = JSON.parse(saved);
+            }
+        }
+
+        // 播放单词发音
+        function playWord(text) {
+            // 确保音频已初始化
+            initAudio();
+
+            // 取消当前播放
+            if (currentSpeech) {
+                currentSpeech.cancel();
+            }
+
+            currentSpeech = new SpeechSynthesisUtterance(text);
+            currentSpeech.lang = 'en-US';
+
+            // 移动端优化：降低播放速度
+            if (isMobile()) {
+                currentSpeech.rate = 0.7;
+            } else {
+                currentSpeech.rate = 0.8;
+            }
+
+            currentSpeech.pitch = 1;
+            currentSpeech.volume = 1;
+
+            // 移动端错误处理
+            currentSpeech.onerror = (event) => {
+                console.error('Speech synthesis error:', event.error);
+                // iOS Safari有时会出错，尝试重试一次
+                if (event.error === 'interrupted' || event.error === 'canceled') {
+                    return;
+                }
+            };
+
+            currentSpeech.onend = () => {
+                document.querySelectorAll('.play-btn').forEach(btn => btn.classList.remove('playing'));
+            };
+
+            const playBtn = event.currentTarget;
+            playBtn.classList.add('playing');
+
+            // 移动端：先取消所有待播放的音频
+            window.speechSynthesis.cancel();
+            setTimeout(() => {
+                window.speechSynthesis.speak(currentSpeech);
+            }, 100);
+        }
+
+        // 播放例句发音
+        function playExample(text, btn) {
+            // 确保音频已初始化
+            initAudio();
+
+            // 取消当前播放
+            if (currentSpeech) {
+                currentSpeech.cancel();
+            }
+
+            currentSpeech = new SpeechSynthesisUtterance(text);
+            currentSpeech.lang = 'en-US';
+
+            // 移动端优化：降低播放速度
+            if (isMobile()) {
+                currentSpeech.rate = 0.65;
+            } else {
+                currentSpeech.rate = 0.75;
+            }
+
+            currentSpeech.pitch = 1;
+            currentSpeech.volume = 1;
+
+            currentSpeech.onend = () => {
+                document.querySelectorAll('.example-play-btn').forEach(b => b.classList.remove('playing'));
+            };
+
+            btn.classList.add('playing');
+
+            // 移动端：先取消所有待播放的音频
+            window.speechSynthesis.cancel();
+            setTimeout(() => {
+                window.speechSynthesis.speak(currentSpeech);
+            }, 100);
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const totalDays = 20;
+            const progress = (completedDays.length / totalDays) * 100;
+
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressPercentage').textContent = `${Math.round(progress)}%`;
+        }
+
+        // 启动应用
+        init();
+    </script>
+</body>
+</html>
